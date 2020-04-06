@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/sounds">
+        <file>doom.mp3</file>
+    </qresource>
+</RCC>
