@@ -148,22 +148,22 @@ void MainWindow::paintEvent(QPaintEvent *event)
         }
     }
 
-//    //draw bullet
-//    if(bulletInPursuit)
-//    {
-//        painter.setBrush( Qt::black );
-//        painter.drawRect(bulletX, bulletY, 10, 25);
-//    }
+    //draw bullet
+    if(bulletInPursuit)
+    {
+        painter.setBrush( Qt::black );
+        painter.drawRect(bulletX, bulletY, 10, 25);
+    }
 
-//    //draw enemy bullet
-//    for(int j = 0; j < enemyBullets.size(); j++)
-//    {
-//        if(enemyBullets[j].bulletInPursuit)
-//        {
-//            painter.setBrush( Qt::red );
-//            painter.drawRect(enemyBullets[j].bulletX, enemyBullets[j].bulletY, 10, 25);
-//        }
-//    }
+    //draw enemy bullet
+    for(int j = 0; j < enemyBullets.size(); j++)
+    {
+        if(enemyBullets[j].bulletInPursuit)
+        {
+            painter.setBrush( Qt::red );
+            painter.drawRect(enemyBullets[j].bulletX, enemyBullets[j].bulletY, 10, 25);
+        }
+    }
 }
 
 //gets keyboard inputs
@@ -352,154 +352,154 @@ void MainWindow::game()
     if(playerX > 750) playerX = 750;
     else if(playerX < 0) playerX = 0;
 
-//    //bullet velocity
-//    bulletY -= 15;
+    //bullet velocity
+    bulletY -= 15;
 
-//    //if bullet misses everything, allow another bullet
-//    if(bulletY < 0)
-//    {
-//        bulletInPursuit = false;
-//    }
+    //if bullet misses everything, allow another bullet
+    if(bulletY < 0)
+    {
+        bulletInPursuit = false;
+    }
 
-//    //fire bullet, if bullet is not in air AND spacebar is pushed
-//    if(!bulletInPursuit && shoot)
-//    {
-//        bulletX = playerX + 20;
-//        bulletY = 715;
-//        bulletInPursuit = true;
-//    }
+    //fire bullet, if bullet is not in air AND spacebar is pushed
+    if(!bulletInPursuit && shoot)
+    {
+        bulletX = playerX + 20;
+        bulletY = 715;
+        bulletInPursuit = true;
+    }
 
-//    //check for bullet impact on bunker
-//    if(bulletInPursuit)
-//    {
-//        bool bulletWithinBunkerX = false;
-//        bool bulletWithinBunkerY = false;
+    //check for bullet impact on bunker
+    if(bulletInPursuit)
+    {
+        bool bulletWithinBunkerX = false;
+        bool bulletWithinBunkerY = false;
 
-//        for(int x = 0; x < 4; x++)
-//        {
-//            if(bunkers[x].alive)
-//            {
-//                if((bulletX > (bunkers[x].posX - 10)) && (bulletX < (bunkers[x].posX + 75)))
-//                {
-//                    bulletWithinBunkerX = true;
-//                }
-//                if((bulletY < (bunkers[x].posY + 75)) && (bulletY > (bunkers[x].posY - 20)))
-//                {
-//                    bulletWithinBunkerY = true;
-//                }
+        for(int x = 0; x < 4; x++)
+        {
+            if(bunkers[x].alive)
+            {
+                if((bulletX > (bunkers[x].posX - 10)) && (bulletX < (bunkers[x].posX + 75)))
+                {
+                    bulletWithinBunkerX = true;
+                }
+                if((bulletY < (bunkers[x].posY + 75)) && (bulletY > (bunkers[x].posY - 20)))
+                {
+                    bulletWithinBunkerY = true;
+                }
 
-//                if(bulletWithinBunkerX && bulletWithinBunkerY)
-//                {
-//                    bunkers[x].health -= 1;
-//                    if(bunkers[x].health < 1) bunkers[x].alive = false;
+                if(bulletWithinBunkerX && bulletWithinBunkerY)
+                {
+                    bunkers[x].health -= 1;
+                    if(bunkers[x].health < 1) bunkers[x].alive = false;
 
-//                    bulletInPursuit = false;
-//                }
+                    bulletInPursuit = false;
+                }
 
-//                bulletWithinBunkerX = false;
-//                bulletWithinBunkerY = false;
-//            }
-//        }
-//    }
+                bulletWithinBunkerX = false;
+                bulletWithinBunkerY = false;
+            }
+        }
+    }
 
-//    //check for ENEMY bullet impact on bunker
-//    for(int c = 0; c < enemyBullets.size(); c++)
-//    {
-//        if(enemyBullets[c].bulletInPursuit)
-//        {
-//            for(int x = 0; x < 4; x++)
-//            {
-//                if(bunkers[x].alive)
-//                {
-//                    bool bulletWithinBunkerX = false;
-//                    bool bulletWithinBunkerY = false;
+    //check for ENEMY bullet impact on bunker
+    for(int c = 0; c < enemyBullets.size(); c++)
+    {
+        if(enemyBullets[c].bulletInPursuit)
+        {
+            for(int x = 0; x < 4; x++)
+            {
+                if(bunkers[x].alive)
+                {
+                    bool bulletWithinBunkerX = false;
+                    bool bulletWithinBunkerY = false;
 
-//                    int bX = enemyBullets[c].bulletX;
-//                    int bY = enemyBullets[c].bulletY;
+                    int bX = enemyBullets[c].bulletX;
+                    int bY = enemyBullets[c].bulletY;
 
-//                    if((bX > (bunkers[x].posX - 10)) && (bX < (bunkers[x].posX + 75)))
-//                    {
-//                        bulletWithinBunkerX = true;
-//                    }
-//                    if((bY < (bunkers[x].posY + 75)) && (bY > (bunkers[x].posY - 20)))
-//                    {
-//                        bulletWithinBunkerY = true;
-//                    }
+                    if((bX > (bunkers[x].posX - 10)) && (bX < (bunkers[x].posX + 75)))
+                    {
+                        bulletWithinBunkerX = true;
+                    }
+                    if((bY < (bunkers[x].posY + 75)) && (bY > (bunkers[x].posY - 20)))
+                    {
+                        bulletWithinBunkerY = true;
+                    }
 
-//                    if(bulletWithinBunkerX && bulletWithinBunkerY)
-//                    {
-//                        bunkers[x].health -= 1;
-//                        if(bunkers[x].health < 1) bunkers[x].alive = false;
+                    if(bulletWithinBunkerX && bulletWithinBunkerY)
+                    {
+                        bunkers[x].health -= 1;
+                        if(bunkers[x].health < 1) bunkers[x].alive = false;
 
-//                        enemyBullets[c].bulletInPursuit = false;
-//                    }
-//                }
-//            }
-//        }
-//    }
+                        enemyBullets[c].bulletInPursuit = false;
+                    }
+                }
+            }
+        }
+    }
 
 
 
-//    //enemy bullet velocity
-//    for(int c = 0; c < enemyBullets.size(); c++)
-//    {
-//        if(enemyBullets[c].bulletInPursuit)
-//        {
-//            enemyBullets[c].bulletY += 10;
-//        }
-//    }
+    //enemy bullet velocity
+    for(int c = 0; c < enemyBullets.size(); c++)
+    {
+        if(enemyBullets[c].bulletInPursuit)
+        {
+            enemyBullets[c].bulletY += 10;
+        }
+    }
 
-//    //(1 out of 120) chance to spawn enemy bullet
-//    if(getRand(0, 120, 9) == 1)
-//    {
-//        spawnEnemyBullet();
-//    }
+    //(1 out of 120) chance to spawn enemy bullet
+    if(getRand(0, 120, 9) == 1)
+    {
+        spawnEnemyBullet();
+    }
 
-//    //check if enemy shot player
-//    for(int c = 0; c < enemyBullets.size(); c++)
-//    {
-//        if(enemyBullets[c].bulletInPursuit)
-//        {
-//            bool bulletInPlayerX = false;
-//            bool bulletInPlayerY = false;
-//            int bX = enemyBullets[c].bulletX;
-//            int bY = enemyBullets[c].bulletY;
+    //check if enemy shot player
+    for(int c = 0; c < enemyBullets.size(); c++)
+    {
+        if(enemyBullets[c].bulletInPursuit)
+        {
+            bool bulletInPlayerX = false;
+            bool bulletInPlayerY = false;
+            int bX = enemyBullets[c].bulletX;
+            int bY = enemyBullets[c].bulletY;
 
-//            if(bX > (playerX - 10) && bX < (playerX + 50)) bulletInPlayerX = true;
-//            if(bY > (playerY - 20) && bY < (playerY + 50)) bulletInPlayerY = true;
+            if(bX > (playerX - 10) && bX < (playerX + 50)) bulletInPlayerX = true;
+            if(bY > (playerY - 20) && bY < (playerY + 50)) bulletInPlayerY = true;
 
-//            if(bulletInPlayerX && bulletInPlayerY)
-//            {
-//                enemyBullets[c].bulletInPursuit = false;
-//                lives -= 1;
-//                if(lives < 1) endGame();
-//            }
-//        }
-//    }
+            if(bulletInPlayerX && bulletInPlayerY)
+            {
+                enemyBullets[c].bulletInPursuit = false;
+                lives -= 1;
+                if(lives < 1) endGame();
+            }
+        }
+    }
 
-//    //check if player shot enemy
-//    if(bulletInPursuit)
-//    {
-//        for(int x = 0; x < 50; x++)
-//        {
-//            if(aliens[x].alive)
-//            {
-//                bool bulletInEnemyX = false;
-//                bool bulletInEnemyY = false;
-//                int pX = aliens[x].posX;
-//                int pY = aliens[x].posY;
+    //check if player shot enemy
+    if(bulletInPursuit)
+    {
+        for(int x = 0; x < 50; x++)
+        {
+            if(aliens[x].alive)
+            {
+                bool bulletInEnemyX = false;
+                bool bulletInEnemyY = false;
+                int pX = aliens[x].posX;
+                int pY = aliens[x].posY;
 
-//                if(bulletX > (pX - 10) && bulletX < (pX + 30)) bulletInEnemyX = true;
-//                if((bulletY > pY) && bulletY < (pY + 30)) bulletInEnemyY = true;
-//                if(bulletInEnemyX && bulletInEnemyY)
-//                {
-//                    bulletInPursuit = false;
-//                    aliens[x].alive = false;
-//                    score += 20;
-//                }
-//            }
-//        }
-//    }
+                if(bulletX > (pX - 10) && bulletX < (pX + 30)) bulletInEnemyX = true;
+                if((bulletY > pY) && bulletY < (pY + 30)) bulletInEnemyY = true;
+                if(bulletInEnemyX && bulletInEnemyY)
+                {
+                    bulletInPursuit = false;
+                    aliens[x].alive = false;
+                    score += 20;
+                }
+            }
+        }
+    }
 
     //player kills all aliens on screen
     if(allAliensDead)
