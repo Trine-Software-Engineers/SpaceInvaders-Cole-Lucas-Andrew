@@ -30,6 +30,12 @@ int roundsBeaten = 0;
 
 float remainingAliens = 0;
 
+int extraAlienX = 0;
+int extraAlienY = 0;
+int extraAlienXMultiplier = 2;
+bool extraAlienStartLeftside = true;
+bool extraAlienAlive = false;
+
 
 
 struct alien
@@ -127,6 +133,13 @@ void MainWindow::paintEvent(QPaintEvent *event)
     painter.setBrush( Qt::green );
     painter.drawRect(playerX, playerY, 50, 50);
 
+    //draw extra alien at top
+    if(extraAlienAlive)
+    {
+        painter.setBrush( Qt::magenta );
+        painter.drawRect(extraAlienX, extraAlienY, 50, 50);
+    }
+
     //draw aliens
     for(int x = 0; x < 50; x++)
     {
@@ -205,6 +218,27 @@ void spawnEnemyBullet()
     }
 }
 
+void spawnExtraAlien()
+{
+    extraAlienAlive = true;
+
+    //start leftside, move to the right
+    if(extraAlienStartLeftside)
+    {
+        extraAlienX = -100;
+        extraAlienXMultiplier = 2;
+
+    }
+    else //start rightside, move to left
+    {
+        extraAlienX = 900;
+        extraAlienXMultiplier = -2;
+    }
+
+    //randomly choose what side extra alien spawns at
+    if(getRand(0,1,999) == 1) extraAlienStartLeftside = !extraAlienStartLeftside;
+}
+
 void calculateAlienSpeed()
 {
     if(remainingAliens > 40)
@@ -266,7 +300,7 @@ void endGame()
     QAbstractButton *yesButton = msgBox.addButton("Yes", QMessageBox::ActionRole);
     QAbstractButton *quitButton = msgBox.addButton("Quit", QMessageBox::ActionRole);
     msgBox.exec();
-    if(msgBox.clickedButton() == yesButton)
+    if(msgBox.clickedButton() == yesButton) //play again
         {
             score = 0;
             lives = 3;
@@ -275,8 +309,9 @@ void endGame()
             alienOffsetY = 0;
             roundsBeaten = 0;
             MSbetweenFrames = 16.666666667;
+            extraAlienAlive = false;
         }
-    else if(msgBox.clickedButton() == quitButton)
+    else if(msgBox.clickedButton() == quitButton)//quit
         {
             QApplication::quit();
         }
@@ -450,9 +485,15 @@ void MainWindow::game()
     }
 
     //(1 out of 120) chance to spawn enemy bullet
-    if(getRand(0, 120, 9) == 1)
+    if(getRand(0, 120, 945634) == 1)
     {
         spawnEnemyBullet();
+    }
+
+    //(1 out of 1200) chance to spawn extra enemy, as long as extra enemy isn't already on screen
+    if(getRand(0,1200, 135435) == 1 && !extraAlienAlive)
+    {
+        spawnExtraAlien();
     }
 
     //check if enemy shot player
@@ -501,6 +542,40 @@ void MainWindow::game()
         }
     }
 
+    //check if player shot extra alien
+    if(bulletInPursuit)
+    {
+        if(extraAlienAlive)
+        {
+            bool bulletInEnemyX = false;
+            bool bulletInEnemyY = false;
+            int pX = extraAlienX;
+            int pY = extraAlienY;
+            if(bulletX > (pX - 10) && bulletX < (pX + 50)) bulletInEnemyX = true;
+            if((bulletY > pY) && bulletY < (pY + 30)) bulletInEnemyY = true;
+            if(bulletInEnemyX && bulletInEnemyY)
+            {
+                bulletInPursuit = false;
+                extraAlienAlive = false;
+                score += 150;
+            }
+        }
+    }
+
+    if(extraAlienAlive)
+    {
+        //move extra alien accross screen
+        extraAlienX += extraAlienXMultiplier;
+
+        //if extra alien survives crossing the screen, kill extra alien
+        if(extraAlienX > 1000 || extraAlienX < -200)
+        {
+            extraAlienAlive = false;
+        }
+
+
+    }
+
     //player kills all aliens on screen
     if(allAliensDead)
     {
@@ -526,7 +601,7 @@ void MainWindow::game()
     QString livesTemp = "Lives: " + QString::number(lives);
     updatelabel(scoreTemp, livesTemp);
 
-
+    //applies speedup if enough aliens are dead
     calculateAlienSpeed();
 
     //update frame
