@@ -37,7 +37,6 @@ bool extraAlienStartLeftside = true;
 bool extraAlienAlive = false;
 
 
-
 struct alien
 {
     int posX = 0;
@@ -47,11 +46,11 @@ struct alien
     bool alive = true;
 };
 
-struct bunker
+struct sandBag
 {
     int posX = 0;
     int posY = 0;
-    int health = 10;
+    int health = 4;
     bool alive = true;
 };
 
@@ -63,7 +62,7 @@ struct enemyBullet
 };
 
 QVector<alien> aliens;
-QVector<bunker> bunkers;
+QVector<sandBag> sandBags;
 QVector<enemyBullet> enemyBullets;
 
 void buildAliens();
@@ -112,16 +111,45 @@ void buildAliens()
 
 void buildBunkers()
 {
-    //clear vector
-    bunkers.clear();
+    //clear bunkers
+    sandBags.clear();
 
-    //fill vector
-    for(int z = 0; z < 4; z++)
+    //fill bunkers
+    int sandBagsOffsetX = 0;
+    sandBag newSandBag;
+    newSandBag.alive = true;
+    newSandBag.health = 4;
+
+    for(int w = 0; w < 4; w++)
     {
-        bunker newBunker;
-        newBunker.posX = 50 + (z*210);
-        newBunker.posY = 600;
-        bunkers.push_back(newBunker);
+        //create top 8 sandbags
+        sandBagsOffsetX = w*200;
+        for(int z = 0; z < 2; z++)
+        {
+            newSandBag.posX = 50 + sandBagsOffsetX;
+            newSandBag.posY = 600 + (z * 25);
+            sandBags.push_back(newSandBag);
+
+            newSandBag.posX = 75 + sandBagsOffsetX;
+            newSandBag.posY = 600 + (z * 25);
+            sandBags.push_back(newSandBag);
+
+            newSandBag.posX = 100 + sandBagsOffsetX;
+            newSandBag.posY = 600 + (z * 25);
+            sandBags.push_back(newSandBag);
+
+            newSandBag.posX = 125 + sandBagsOffsetX;
+            newSandBag.posY = 600 + (z * 25);
+            sandBags.push_back(newSandBag);
+        }
+        //create bottom two sandbags
+        newSandBag.posX = 50 + sandBagsOffsetX;
+        newSandBag.posY = 650;
+        sandBags.push_back(newSandBag);
+
+        newSandBag.posX = 125 + sandBagsOffsetX;
+        newSandBag.posY = 650;
+        sandBags.push_back(newSandBag);
     }
 }
 
@@ -151,13 +179,13 @@ void MainWindow::paintEvent(QPaintEvent *event)
     }
 
     //draw bunkers
-    for(int z = 0; z < 4; z++)
+    for(int z = 0; z < 40; z++)
     {
-        if(bunkers[z].alive)
+        if(sandBags[z].alive)
         {
-            int colorMultiplier = bunkers[z].health * 25;
+            int colorMultiplier = sandBags[z].health * 70;
             painter.setBrush( QColor(colorMultiplier, colorMultiplier, colorMultiplier, 100) );
-            painter.drawRect(bunkers[z].posX, bunkers[z].posY, 75, 75);
+            painter.drawRect(sandBags[z].posX, sandBags[z].posY, 25, 25);
         }
     }
 
@@ -407,32 +435,31 @@ void MainWindow::game()
     //check for bullet impact on bunker
     if(bulletInPursuit)
     {
-        bool bulletWithinBunkerX = false;
-        bool bulletWithinBunkerY = false;
-
-        for(int x = 0; x < 4; x++)
+        for(int x = 0; x < 40; x++)
         {
-            if(bunkers[x].alive)
+            if(sandBags[x].alive)
             {
-                if((bulletX > (bunkers[x].posX - 10)) && (bulletX < (bunkers[x].posX + 75)))
+                bool bulletWithinSandBagX = false;
+                bool bulletWithinSandBagY = false;
+
+                if((bulletX > (sandBags[x].posX - 10)) && (bulletX < (sandBags[x].posX + 25)))
                 {
-                    bulletWithinBunkerX = true;
+                    bulletWithinSandBagX = true;
                 }
-                if((bulletY < (bunkers[x].posY + 75)) && (bulletY > (bunkers[x].posY - 20)))
+                if((bulletY < (sandBags[x].posY + 25)) && (bulletY > (sandBags[x].posY - 20)))
                 {
-                    bulletWithinBunkerY = true;
+                    bulletWithinSandBagY = true;
                 }
 
-                if(bulletWithinBunkerX && bulletWithinBunkerY)
+                if(bulletWithinSandBagX && bulletWithinSandBagY)
                 {
-                    bunkers[x].health -= 1;
-                    if(bunkers[x].health < 1) bunkers[x].alive = false;
+                    sandBags[x].health -= 1;
+                    if(sandBags[x].health < 1) sandBags[x].alive = false;
 
                     bulletInPursuit = false;
                 }
 
-                bulletWithinBunkerX = false;
-                bulletWithinBunkerY = false;
+
             }
         }
     }
@@ -442,29 +469,29 @@ void MainWindow::game()
     {
         if(enemyBullets[c].bulletInPursuit)
         {
-            for(int x = 0; x < 4; x++)
+            for(int x = 0; x < 40; x++)
             {
-                if(bunkers[x].alive)
+                if(sandBags[x].alive)
                 {
-                    bool bulletWithinBunkerX = false;
-                    bool bulletWithinBunkerY = false;
+                    bool bulletWithinSandBagX = false;
+                    bool bulletWithinSandBagY = false;
 
                     int bX = enemyBullets[c].bulletX;
                     int bY = enemyBullets[c].bulletY;
 
-                    if((bX > (bunkers[x].posX - 10)) && (bX < (bunkers[x].posX + 75)))
+                    if((bX > (sandBags[x].posX - 10)) && (bX < (sandBags[x].posX + 25)))
                     {
-                        bulletWithinBunkerX = true;
+                        bulletWithinSandBagX = true;
                     }
-                    if((bY < (bunkers[x].posY + 75)) && (bY > (bunkers[x].posY - 20)))
+                    if((bY < (sandBags[x].posY + 25)) && (bY > (sandBags[x].posY - 25)))
                     {
-                        bulletWithinBunkerY = true;
+                        bulletWithinSandBagY = true;
                     }
 
-                    if(bulletWithinBunkerX && bulletWithinBunkerY)
+                    if(bulletWithinSandBagX && bulletWithinSandBagY)
                     {
-                        bunkers[x].health -= 1;
-                        if(bunkers[x].health < 1) bunkers[x].alive = false;
+                        sandBags[x].health -= 1;
+                        if(sandBags[x].health < 1) sandBags[x].alive = false;
 
                         enemyBullets[c].bulletInPursuit = false;
                     }
