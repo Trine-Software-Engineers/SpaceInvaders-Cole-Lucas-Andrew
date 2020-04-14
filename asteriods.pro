@@ -17,15 +17,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    leaderboard.cpp \
     main.cpp \
     mainwindow.cpp \
     menu.cpp
 
 HEADERS += \
+    leaderboard.h \
     mainwindow.h \
     menu.h
 
 FORMS += \
+    leaderboard.ui \
     mainwindow.ui \
     menu.ui
 
@@ -36,3 +39,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     Resources.qrc
+
+DISTFILES += \
+    leaderboard.txt
