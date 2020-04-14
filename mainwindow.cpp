@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "leaderboard.h"
 #include <QtMultimedia/QMediaPlayer>
+
 
 
 float MSbetweenFrames = 16.666666667; //time between frames in milliseconds (roughly 60fps)
@@ -324,6 +326,10 @@ void endGame()
     QMessageBox msgBox;
     msgBox.setWindowTitle("Space Invaders");
     msgBox.setText("Game Over!\nFinal Score: " + QString::number(score) + "\nPlay Again?");
+
+    leaderboard board;
+    board.setScore(score);
+    board.showLeaderboard();
 
     QAbstractButton *yesButton = msgBox.addButton("Yes", QMessageBox::ActionRole);
     QAbstractButton *quitButton = msgBox.addButton("Quit", QMessageBox::ActionRole);
