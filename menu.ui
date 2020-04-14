@@ -459,33 +459,14 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>300</x>
+      <x>270</x>
       <y>430</y>
-      <width>75</width>
-      <height>23</height>
+      <width>81</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
      <string>Play!</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>20</y>
-      <width>600</width>
-      <height>400</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::Box</enum>
-    </property>
-    <property name="lineWidth">
-     <number>5</number>
-    </property>
-    <property name="text">
-     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
@@ -531,9 +512,9 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>225</x>
       <y>75</y>
-      <width>200</width>
+      <width>250</width>
       <height>30</height>
      </rect>
     </property>
@@ -545,7 +526,7 @@
     </property>
     <property name="maximumSize">
      <size>
-      <width>200</width>
+      <width>250</width>
       <height>30</height>
      </size>
     </property>
@@ -556,7 +537,7 @@
      <enum>QFrame::NoFrame</enum>
     </property>
     <property name="text">
-     <string>Destory the Invaders! Don't Let them in!</string>
+     <string>Destroy the Invaders! Don't Let them in!</string>
     </property>
     <property name="textFormat">
      <enum>Qt::AutoText</enum>
@@ -566,25 +547,6 @@
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>100</y>
-      <width>500</width>
-      <height>1</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::Box</enum>
-    </property>
-    <property name="lineWidth">
-     <number>2</number>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_5">
@@ -601,6 +563,19 @@
     </property>
     <property name="wordWrap">
      <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Leaderboard">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>430</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>High Scores</string>
     </property>
    </widget>
   </widget>
