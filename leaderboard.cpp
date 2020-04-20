@@ -74,6 +74,7 @@ void leaderboard::showLeaderboard() {
 
 void leaderboard::LeaderboardUpdate(QVector<LeaderboardRow> &leaderboard)
 {
+    //D:/Onedrive/Desktop/SpaceInvaders-Cole-Lucas-Andrew/leaderboard.txt
     QFile file("leaderboard.txt");
     file.close();
     if (!file.open(QIODevice::ReadOnly)) {

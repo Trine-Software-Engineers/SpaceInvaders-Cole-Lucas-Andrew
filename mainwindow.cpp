@@ -77,6 +77,13 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    /*---------------         This makes a really cool background            --------------*/
+    //QPixmap bkgnd("D:/Onedrive/Desktop/SpaceInvaders-Cole-Lucas-Andrew/space.png");
+    //bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+    //QPalette palette;
+    //palette.setBrush(QPalette::Background, bkgnd);
+    //this->setPalette(palette);
+
     //setup time between frames
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()),this,SLOT(game()));
@@ -185,7 +192,9 @@ void MainWindow::paintEvent(QPaintEvent *event)
     {
         if(sandBags[z].alive)
         {
-            int colorMultiplier = sandBags[z].health * 70;
+            int colors[] = {250,100,20,0};
+            int colorMultiplier = colors[(sandBags[z].health)];
+            painter.setPen(Qt::NoPen);
             painter.setBrush( QColor(colorMultiplier, colorMultiplier, colorMultiplier, 100) );
             painter.drawRect(sandBags[z].posX, sandBags[z].posY, 25, 25);
         }
