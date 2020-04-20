@@ -71,18 +71,19 @@ void buildAliens();
 void buildBunkers();
 int getRand(int min, int max, unsigned int seed);
 
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
-    /*---------------         This makes a really cool background            --------------*/
-    //QPixmap bkgnd("D:/Onedrive/Desktop/SpaceInvaders-Cole-Lucas-Andrew/space.png");
-    //bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
-    //QPalette palette;
-    //palette.setBrush(QPalette::Background, bkgnd);
-    //this->setPalette(palette);
+    QPixmap bkgnd(":/files/space.png");
+    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Background, bkgnd);
+    this->setPalette(palette);
 
     //setup time between frames
     timer = new QTimer(this);
@@ -90,6 +91,8 @@ MainWindow::MainWindow(QWidget *parent)
     timer->start(MSbetweenFrames);
     buildAliens();
     buildBunkers();
+
+
 }
 
 MainWindow::~MainWindow()
@@ -167,14 +170,14 @@ void MainWindow::paintEvent(QPaintEvent *event)
     QPainter painter(this);
 
     //draw player
-    painter.setBrush( Qt::green );
-    painter.drawRect(playerX, playerY, 50, 50);
+    QPixmap playerShip(":/files/player50x50.png");
+    painter.drawPixmap(playerX, playerY, playerShip);
 
     //draw extra alien at top
     if(extraAlienAlive)
     {
-        painter.setBrush( Qt::magenta );
-        painter.drawRect(extraAlienX, extraAlienY, 50, 50);
+        QPixmap alien(":/files/alien50x50.png");
+        painter.drawPixmap(extraAlienX, extraAlienY, alien);
     }
 
     //draw aliens
@@ -182,8 +185,8 @@ void MainWindow::paintEvent(QPaintEvent *event)
     {
         if(aliens[x].alive)
         {
-            painter.setBrush( Qt::red );
-            painter.drawRect(aliens[x].posX,aliens[x].posY, 30, 30);
+            QPixmap alien(":/files/alien30x30.png");
+            painter.drawPixmap(aliens[x].posX,aliens[x].posY, alien);
         }
     }
 
@@ -192,19 +195,39 @@ void MainWindow::paintEvent(QPaintEvent *event)
     {
         if(sandBags[z].alive)
         {
-            int colors[] = {250,100,20,0};
-            int colorMultiplier = colors[(sandBags[z].health)];
-            painter.setPen(Qt::NoPen);
-            painter.setBrush( QColor(colorMultiplier, colorMultiplier, colorMultiplier, 100) );
-            painter.drawRect(sandBags[z].posX, sandBags[z].posY, 25, 25);
+            //get health of each sandbag, then assign proper sprite to each health value
+            QString filePath = "";
+            switch(sandBags[z].health) {
+                case 4:
+                    filePath = ":/files/bunker4.png";
+                    break;
+
+                case 3:
+                    filePath = ":/files/bunker3.png";
+                    break;
+
+                case 2:
+                    filePath = ":/files/bunker2.png";
+                    break;
+
+                case 1:
+                    filePath = ":/files/bunker1.png";
+                    break;
+
+                case 0:
+                    filePath = ":/files/bunker0.png";
+                    break;
+            }
+            QPixmap bunker(filePath);
+            painter.drawPixmap(sandBags[z].posX, sandBags[z].posY, bunker);
         }
     }
 
     //draw bullet
     if(bulletInPursuit)
     {
-        painter.setBrush( Qt::black );
-        painter.drawRect(bulletX, bulletY, 10, 25);
+        QPixmap bullet(":/files/bullet10x25.png");
+        painter.drawPixmap(bulletX, bulletY, bullet);
     }
 
     //draw enemy bullet
@@ -212,8 +235,8 @@ void MainWindow::paintEvent(QPaintEvent *event)
     {
         if(enemyBullets[j].bulletInPursuit)
         {
-            painter.setBrush( Qt::red );
-            painter.drawRect(enemyBullets[j].bulletX, enemyBullets[j].bulletY, 10, 25);
+            QPixmap enemyBullet(":/files/enemyBullet10x25.png");
+            painter.drawPixmap(enemyBullets[j].bulletX, enemyBullets[j].bulletY, enemyBullet);
         }
     }
 }
@@ -324,8 +347,8 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
 
 void MainWindow::updatelabel(QString score, QString lives)
 {
-    ui->scoreLabel->setText(score);
-    ui->livesLabel->setText(lives);
+    ui->scoreLabel->setText("<font color='white'>" + score + "</font>");
+    ui->livesLabel->setText("<font color='white'>" + lives + "</font>");
 }
 
 
@@ -549,7 +572,7 @@ void MainWindow::game()
             int bY = enemyBullets[c].bulletY;
 
             if(bX > (playerX - 10) && bX < (playerX + 50)) bulletInPlayerX = true;
-            if(bY > (playerY - 20) && bY < (playerY + 50)) bulletInPlayerY = true;
+            if(bY > playerY && bY < (playerY + 50)) bulletInPlayerY = true;
 
             if(bulletInPlayerX && bulletInPlayerY)
             {

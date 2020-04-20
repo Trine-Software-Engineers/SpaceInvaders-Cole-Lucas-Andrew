@@ -1,5 +1,19 @@
 <RCC>
-    <qresource prefix="/sounds">
+    <qresource prefix="/files">
         <file>doom.mp3</file>
+        <file>alien30x30.png</file>
+        <file>alien50x50.png</file>
+        <file>space.png</file>
+        <file>enemyBullet10x25.png</file>
+        <file>player50x50.png</file>
+        <file>bunker0.png</file>
+        <file>bunker1.png</file>
+        <file>bunker2.png</file>
+        <file>bunker3.png</file>
+        <file>bunker4.png</file>
+        <file>bullet10x25.png</file>
+        <file>player100x100.png</file>
+        <file>alien100x100.png</file>
+        <file>alienRed100x100.png</file>
     </qresource>
 </RCC>

@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QObject>
 #include "mainwindow.h"
+#include <QPainter>
+#include <QPixmap>
 
 namespace Ui {
 class Menu;
@@ -15,6 +17,7 @@ class Menu : public QMainWindow
 
 public:
     explicit Menu(QWidget *parent = nullptr);
+    virtual void paintEvent(QPaintEvent *event);
     ~Menu();
     void UI();
 

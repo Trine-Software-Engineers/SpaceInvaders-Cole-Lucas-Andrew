@@ -9,12 +9,14 @@ Menu::Menu(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QPixmap bkgnd("D:/Onedrive/Desktop/SpaceInvaders-Cole-Lucas-Andrew/space.png");
+    QPixmap bkgnd(":/files/space.png");
     bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
     QPalette palette;
     palette.setBrush(QPalette::Background, bkgnd);
     this->setPalette(palette);
+
 }
+
 
 
 
@@ -23,6 +25,26 @@ Menu::~Menu()
     delete ui;
 }
 
+void Menu::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);
+
+    //draw player left side
+    QPixmap playerHighQuality(":/files/player100x100.png");
+    painter.drawPixmap(25, 350, playerHighQuality);
+
+    //draw alien left side
+    QPixmap alienHighQuality(":/files/alien100x100.png");
+    painter.drawPixmap(25, 25, alienHighQuality);
+
+
+    //draw player right side
+    painter.drawPixmap(575, 350, playerHighQuality);
+
+    //draw alien right side
+    QPixmap alienHighQualityRed(":/files/alienRed100x100.png");
+    painter.drawPixmap(575, 25, alienHighQualityRed);
+}
 
 void Menu::on_pushButton_clicked()
 {
