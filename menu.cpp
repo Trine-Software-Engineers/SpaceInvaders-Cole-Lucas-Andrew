@@ -49,6 +49,7 @@ void Menu::paintEvent(QPaintEvent *event)
 void Menu::on_pushButton_clicked()
 {
     this->hide();
+    Game.unpause(); //--------Here's the unpause function
     Game.show();
 }
 

@@ -63,6 +63,8 @@ struct enemyBullet
     bool bulletInPursuit = true;
 };
 
+bool startGame = false;
+
 QVector<alien> aliens;
 QVector<sandBag> sandBags;
 QVector<enemyBullet> enemyBullets;
@@ -386,7 +388,7 @@ void endGame()
 //runs every frame
 void MainWindow::game()
 {
-    //check if all aliens are dead
+    if(startGame == true){//check if all aliens are dead
     bool atLeastOneAlienAlive = false;
     for(int x = 0; x < 50; x++)
     {
@@ -671,6 +673,7 @@ void MainWindow::game()
 
     //update frame
     update();
+    }
 }
 
 //grab random number between two values. Also takes a seed as input.
@@ -679,4 +682,9 @@ int getRand(int min, int max, unsigned int seed){
     std::mt19937 gen(ms);
     std::uniform_int_distribution<> uid(min, max);
     return uid(gen);
+}
+
+//--------Here's the unpause function
+void unpause() {
+    startGame = true;
 }

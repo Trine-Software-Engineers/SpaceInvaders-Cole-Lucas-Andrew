@@ -31,8 +31,11 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     virtual void paintEvent(QPaintEvent *event);
+
+    void unpause();
 public slots:
     void game();
+
 
 private:
     Ui::MainWindow *ui;
@@ -43,4 +46,5 @@ protected:
     void keyPressEvent(QKeyEvent *e);
     void keyReleaseEvent(QKeyEvent *e);
 };
+
 #endif // MAINWINDOW_H
