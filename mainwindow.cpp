@@ -685,6 +685,6 @@ int getRand(int min, int max, unsigned int seed){
 }
 
 //--------Here's the unpause function
-void unpause() {
+void MainWindow::unpause() {
     startGame = true;
 }
