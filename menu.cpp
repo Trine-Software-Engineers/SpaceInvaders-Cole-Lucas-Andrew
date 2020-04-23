@@ -2,6 +2,11 @@
 #include "ui_menu.h"
 #include <QHBoxLayout>
 #include "leaderboard.h"
+#include <QSound>
+//#include <QMultimedia>
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
+#include <QDir>
 
 Menu::Menu(QWidget *parent) :
     QMainWindow(parent),
@@ -15,6 +20,15 @@ Menu::Menu(QWidget *parent) :
     palette.setBrush(QPalette::Background, bkgnd);
     this->setPalette(palette);
 
+    const QString menuMusicPath = "file://" + QDir::currentPath() + "/menu.mp3";
+//    QMediaPlayer *player = new QMediaPlayer;
+//    connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
+    QMediaPlaylist *playlist = new QMediaPlaylist();
+    playlist->addMedia(QUrl(menuMusicPath));
+    playlist->setPlaybackMode(QMediaPlaylist::Loop);
+    player->setPlaylist(playlist);
+    player->setVolume(50);
+    player->play();
 }
 
 
@@ -50,6 +64,7 @@ void Menu::on_pushButton_clicked()
 {
     this->hide();
     Game.unpause(); //--------Here's the unpause function
+    player->pause();
     Game.show();
 }
 

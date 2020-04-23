@@ -6,6 +6,7 @@
 #include "mainwindow.h"
 #include <QPainter>
 #include <QPixmap>
+#include <QMediaPlayer>
 
 namespace Ui {
 class Menu;
@@ -29,6 +30,7 @@ private slots:
 private:
     Ui::Menu *ui;
     MainWindow Game;
+    QMediaPlayer *player = new QMediaPlayer;
 };
 
 

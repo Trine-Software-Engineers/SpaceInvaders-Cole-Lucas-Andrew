@@ -41,4 +41,6 @@ RESOURCES += \
     Resources.qrc
 
 DISTFILES += \
+    doom.mp3 \
+    doom.wav \
     leaderboard.txt

@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/files">
-        <file>doom.mp3</file>
         <file>alien30x30.png</file>
         <file>alien50x50.png</file>
         <file>space.png</file>

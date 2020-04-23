@@ -1,2 +1,5 @@
 # User Settings
 *.user*
+
+*.o
+*.qmake.stash

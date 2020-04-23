@@ -1,7 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "leaderboard.h"
-#include <QtMultimedia/QMediaPlayer>
+#include <QMediaPlayer>
+#include <QDir>
+#include <QSound>
+#include <QMultimedia>
 
 
 
@@ -37,6 +40,9 @@ int extraAlienY = 0;
 int extraAlienXMultiplier = 2;
 bool extraAlienStartLeftside = true;
 bool extraAlienAlive = false;
+
+QMediaPlayer *bonusMedia = new QMediaPlayer;
+QMediaPlayer *gameMedia = new QMediaPlayer;
 
 
 struct alien
@@ -94,7 +100,19 @@ MainWindow::MainWindow(QWidget *parent)
     buildAliens();
     buildBunkers();
 
+    const QString laserMediaPath = "file://" + QDir::currentPath() + "/laser.mp3";
+//    QMediaPlayer *laserMedia = new QMediaPlayer;
+    laserMedia->setMedia(QUrl(laserMediaPath));
+    laserMedia->setVolume(50);
 
+    const QString bonusMediaPath = "file://" + QDir::currentPath() + "/bonusAlien.mp3";
+    bonusMedia->setMedia(QUrl(bonusMediaPath));
+    bonusMedia->setVolume(50);
+
+    const QString gameMediaPath = "file://" + QDir::currentPath() + "/gameMusic.mp3";
+    gameMedia->setMedia(QUrl(gameMediaPath));
+    gameMedia->setVolume(25);
+    gameMedia->play();
 }
 
 MainWindow::~MainWindow()
@@ -259,6 +277,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 
         case 32        :
             shoot = true;
+            laserMedia->play();
             break;
     }
 }
@@ -301,6 +320,8 @@ void spawnExtraAlien()
 
     //randomly choose what side extra alien spawns at
     if(getRand(0,1,999) == 1) extraAlienStartLeftside = !extraAlienStartLeftside;
+
+    bonusMedia->play();
 }
 
 void calculateAlienSpeed()
@@ -356,6 +377,7 @@ void MainWindow::updatelabel(QString score, QString lives)
 
 void endGame()
 {
+    gameMedia->pause();
     MSbetweenFrames = INT_MAX;
     QMessageBox msgBox;
     msgBox.setWindowTitle("Space Invaders");
@@ -640,7 +662,7 @@ void MainWindow::game()
             extraAlienAlive = false;
         }
 
-
+        bonusMedia->play();
     }
 
     //player kills all aliens on screen
@@ -685,6 +707,6 @@ int getRand(int min, int max, unsigned int seed){
 }
 
 //--------Here's the unpause function
-void unpause() {
+void MainWindow::unpause() {
     startGame = true;
 }

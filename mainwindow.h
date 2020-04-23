@@ -18,6 +18,7 @@
 #include <QString>
 #include <QColor>
 #include <QPixmap>
+#include <QMediaPlayer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -41,6 +42,8 @@ private:
     Ui::MainWindow *ui;
     QTimer *timer;
     void updatelabel(QString score, QString lives);
+    QMediaPlayer *laserMedia = new QMediaPlayer;
+
 
 protected:
     void keyPressEvent(QKeyEvent *e);
